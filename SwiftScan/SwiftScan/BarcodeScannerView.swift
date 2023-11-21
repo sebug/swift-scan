@@ -28,6 +28,14 @@ struct BarcodeScannerView: View {
             let input = try AVCaptureDeviceInput(device: captureDevice)
             captureSession = AVCaptureSession()
             captureSession?.addInput(input)
+            
+            
+            let metadataOutput = AVCaptureMetadataOutput()
+            if (captureSession!.canAddOutput(metadataOutput)) {
+                captureSession?.addOutput(metadataOutput)
+                metadataOutput.metadataObjectTypes = [.qr]
+            }
+            
             videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
             videoPreviewLayer?.videoGravity = .resizeAspectFill
             videoPreviewLayer?.frame = UIScreen.main.bounds
